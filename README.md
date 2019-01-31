@@ -10,3 +10,6 @@ This was the first project I undertook in 2019. A simple gallery with a responsi
 1. border utility classes
 1. card component
 1. new column breakpoints
+
+## Museum of candy
+This is another project designed to help me understand the bootstrap grid framework
