@@ -10,3 +10,11 @@ This was the first project I undertook in 2019. A simple gallery with a responsi
 1. border utility classes
 1. card component
 1. new column breakpoints
+
+## Museum of candy
+This is another project designed to help me understand some new bootstrap 4 concepts
+
+1. Flexbox classes to change vertical alignment
+1. Bootstrap utility classes for spacing
+1. Bootstrap layout classes for rearranging content based on screen sizes. 
+1. Navbar and animation
