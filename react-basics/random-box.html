@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>component 1</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="text/babel">
+    class Pet extends React.Component {
+        render() {
+            const bgArray = ['green', 'red', 'blue', 'orange'];
+            const fontArray = ['1em', '1.5em', '2em', '2.5em'];
+            const random = Math.floor(Math.random() * bgArray.length);
+            return(
+                <div style={{backgroundColor: bgArray[random], width: '300px', height: '200px'}}>
+                    <h1 style={{color: 'white', fontSize: fontArray[random]}}>Random Box</h1>
+                </div>
+            );
+        }
+    }
+
+    ReactDOM.render(<Pet />, document.getElementById('app'));
+    </script>
+</body>
+</html>
