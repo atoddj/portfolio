@@ -6,6 +6,9 @@ function Recipe(props) {
     const ingredients = props.ingredients.map((ing, index) => (
         <li key={index}>{ing}</li>
     ));
+    const directionsList = directions.map((step,i) => (
+        <li>{step}</li>
+    ));
     return(
         <div className="recipe-card">
             <div className="recipe-card-image">
@@ -16,7 +19,7 @@ function Recipe(props) {
                 <h4>Ingredients</h4>
                 <ul>{ingredients}</ul>
                 <h4>Directions</h4>
-                <p>{directions}</p>
+                <ol>{directionsList}</ol>
             </div>
         </div>
     )
