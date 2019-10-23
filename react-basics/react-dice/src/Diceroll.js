@@ -7,7 +7,6 @@ class Diceroll extends Component {
         super(props);
         this.state = {
             rolling: false,
-            className: '',
             die1: 1,
             die2: 1
         };
@@ -18,13 +17,13 @@ class Diceroll extends Component {
         let rand1 = Math.floor(Math.random() * 6) + 1;
         let rand2 = Math.floor(Math.random() * 6) + 1;
         setTimeout(() => {
-            this.setState({rolling: false, className: '', die1: rand1, die2: rand2});
+            this.setState({rolling: false, die1: rand1, die2: rand2});
         }, 700);
     }
     render() {
         var button = <button onClick={this.rollDice} disabled={this.state.rolling}>{this.state.rolling ? 'Rolling...' : 'Roll the dice!'}</button>;
         return (
-            <div className={"diceroll" + this.state.className}>
+            <div className={`diceroll ${this.state.rolling ? ' active' : ''}`}>
                 <Die number={this.state.die1} />
                 <Die number={this.state.die2} />
                 <div className="diceroll-button">
