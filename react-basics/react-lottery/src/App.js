@@ -6,6 +6,11 @@ function App() {
   return (
     <div className="App">
       <Lottery />
+      <Lottery 
+        title="Daily lotto"
+        numBalls={4}
+        maxNum={10}
+      />
     </div>
   );
 }
