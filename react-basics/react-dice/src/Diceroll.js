@@ -7,7 +7,6 @@ class Diceroll extends Component {
         super(props);
         this.state = {
             rolling: false,
-            disabled: 'false',
             className: '',
             die1: 1,
             die2: 1
@@ -15,13 +14,11 @@ class Diceroll extends Component {
         this.rollDice = this.rollDice.bind(this);
     }
     rollDice() {
-        this.setState({rolling: true, disabled: 'true', className: ' active'});
+        this.setState({rolling: true, className: ' active'});
         let rand1 = Math.floor(Math.random() * 6) + 1;
         let rand2 = Math.floor(Math.random() * 6) + 1;
         setTimeout(() => {
-            this.setState({rolling: false, disabled: 'false', className: ''});
-            this.setState({die1: rand1});
-            this.setState({die2: rand2});
+            this.setState({rolling: false, className: '', die1: rand1, die2: rand2});
         }, 700);
     }
     render() {
