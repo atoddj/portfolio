@@ -2,7 +2,7 @@
   "name": "react-dice",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://atoddj.github.io/portfolio/react-dice",
+  "homepage": "https://atoddj.github.io/portfolio",
   "dependencies": {
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
