@@ -8,24 +8,30 @@ class Lottery extends Component {
         maxNum: 40,
         title: 'Big Lotto'
     };
-
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = { balls: Array.from({length: this.props.numBalls}) };
+        this.generate = this.generate.bind(this);
     };
 
+    generate() {
+        this.setState(curState => ({
+            balls: curState.balls.map(
+                n => Math.floor(Math.random() * this.props.maxNum) + 1
+            )
+        }));
+    }
+
     render() {
-        var balls = [];
-        for (let i = 0, j = this.props.numBalls; i < j; i++) {
-            let value = Math.floor(Math.random() * this.props.maxNum) + 1;
-            balls.push(<Ball key={i} number={value} />);
-        }
         return (
             <div className="lottery">
                 <h2>{this.props.title}</h2>
                 <div className="lottery-balls">
-                    {balls}
+                    {this.state.balls.map(n => (
+                        <Ball num={n} />
+                    ))}
                 </div>
+                <button className="lottery-button" onClick={this.generate}>Generate</button>
             </div>
         )
     };
