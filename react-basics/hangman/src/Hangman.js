@@ -23,9 +23,10 @@ class Hangman extends Component {
     render() { 
         return ( 
             <div className="Hangman">
+                <div className="Hangman-list-description">Already guessed</div>
                 <ul className="Hangman-list">
                     {this.state.guesses.map((item) => (
-                        <Letter data={item} />
+                        item.guessed && <Letter data={item} />
                     ))}
                 </ul>
             </div>
