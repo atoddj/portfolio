@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import Letter from './Letter';
+import './Hangman.css';
 
 class Hangman extends Component {
     static defaultProps = {
-        alphabet: ['a', 'b', 'c', 'd']
+        alphabet: ['a', 'b', 'c', 'd', 'e', 'f','g','h','i','j','k',
+        'l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     }      
     constructor(props) {
         super(props);
@@ -12,19 +15,19 @@ class Hangman extends Component {
     }
 
     formatData(alphabet) {
-        var arrayOfObjects = alphabet.map((item) => {
-            let temp = {};
-            temp[item] = {guessed: false};
-            return temp;
+        return alphabet.map((item, index) => {
+            return {letter: item, guessed: false};
         });
-        var newResult = Object.assign({}, ...arrayOfObjects)
-        return newResult;
     }
 
     render() { 
         return ( 
             <div className="Hangman">
-                Hangman!
+                <ul className="Hangman-list">
+                    {this.state.guesses.map((item) => (
+                        <Letter data={item} />
+                    ))}
+                </ul>
             </div>
          );
     }
