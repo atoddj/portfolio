@@ -8,6 +8,7 @@ class Lottery extends Component {
         maxNum: 40,
         title: 'Big Lotto'
     };
+    
     constructor(props) {
         super(props);
         this.state = { balls: Array.from({length: this.props.numBalls}) };
@@ -20,7 +21,7 @@ class Lottery extends Component {
                 n => Math.floor(Math.random() * this.props.maxNum) + 1
             )
         }));
-    }
+    };
 
     render() {
         return (
