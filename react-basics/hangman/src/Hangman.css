@@ -1,0 +1,13 @@
+.Hangman {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Hangman-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    width:50%;
+    justify-content: space-between;
+    font-size: 20px
+}
