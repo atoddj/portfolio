@@ -5,7 +5,13 @@
     flex-wrap:wrap;
 }
 .Hangman-list-description {
+    align-items: center;
     display:block;
+    width:100%;
+}
+
+.Hangman-guess {
+    align-items:center;
     width:100%;
 }
 .Hangman-list {
@@ -15,4 +21,16 @@
     width:50%;
     justify-content: space-between;
     font-size: 20px
+}
+
+.Hangman-word {
+    font-size: 300%;
+    display: flex;
+    height: 100px;
+}
+
+.Hangman-word-letter {
+    margin: 0 .4em;
+    border-bottom: 2px solid black;
+    width: 75px;
 }
