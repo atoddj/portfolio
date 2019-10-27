@@ -3,11 +3,6 @@ import Letter from './Letter';
 import {dictionary as randomWord} from './dictionary';
 import './Hangman.css';
 
-/*
-    TODO: Add gameover + winner messages
-    TODO: Add library of words + new game button
-*/
-
 class Hangman extends Component {
     static defaultProps = {
         alphabet: ['a','b','c','d','e','f','g','h','i','j','k','l',
@@ -21,10 +16,12 @@ class Hangman extends Component {
             word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
             guessValue: '',
             errorMessage: '',
-            wrongGuesses: this.props.maxWrongGuesses
+            wrongGuesses: this.props.maxWrongGuesses,
+            victory: false
          }
          this.handleChange = this.handleChange.bind(this);
          this.handleSubmit = this.handleSubmit.bind(this);
+         this.resetGame = this.resetGame.bind(this);
     }
 
     formatData(alphabet) {
@@ -59,12 +56,41 @@ class Hangman extends Component {
         this.setState({guessValue: event.target.value});
     }
 
+    resetGame() {
+        this.setState({
+            guesses: this.formatData(this.props.alphabet), 
+            word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
+            guessValue: '', 
+            errorMessage: '',
+            wrongGuesses: this.props.maxWrongGuesses,
+            victory: false
+        })
+    }
+
+    componentDidUpdate() {
+        var correctLetters = document.querySelectorAll('.Hangman-word-letter');
+        let word = '' 
+        for (let i = 0; i < correctLetters.length; i++) {
+            const el = correctLetters[i];
+            if (el.innerText) {
+                word += el.innerText;
+            };
+        }
+        if (JSON.stringify(word.split('')) === JSON.stringify(this.state.word) && !this.state.victory){
+            this.setState({victory: true});
+        }
+    }
+
     render() {
         let lose = this.state.wrongGuesses === 0;
+        let win = this.state.victory;
         return ( 
             <div className="Hangman">
-                {lose && <div class="Hangman-lose">You lose, try again</div>}
-                <h1 className="Hangman-list-description">{this.state.wrongGuesses} incorrect guesses left</h1>
+                { lose 
+                    ? <h1 className="Hangman-list-description" style={{color: 'red'}}>You lose, try again</h1> 
+                    : <h1 className="Hangman-list-description">{this.state.wrongGuesses} incorrect guesses left</h1>
+                }
+
                 <ul className="Hangman-list">
                     {this.state.guesses.map((item) => (
                         item.guessed && <Letter data={item} />
@@ -72,10 +98,14 @@ class Hangman extends Component {
                 </ul>
 
                 <form className="Hangman-guess" onSubmit={this.handleSubmit}>
-                    <label>Guess a letter 
-                    <input type="text" value={this.state.guessValue} onChange={this.handleChange} maxLength="1" onKeyUp={this.handleKeyUp} disabled={lose}/>
+                    <label>Guess a letter <input type="text" 
+                        value={this.state.guessValue} 
+                        onChange={this.handleChange} 
+                        maxLength="1" 
+                        onKeyUp={this.handleKeyUp} 
+                        disabled={lose || win}/>
                     </label>
-                    <input type="submit" value="Submit" disabled={lose} />
+                    <input type="submit" value="Submit" disabled={lose || win} />
                 </form>
                 {this.state.errorMessage && 
                     <div className="Hangman-error">
@@ -91,6 +121,13 @@ class Hangman extends Component {
                         ))
                     }
                 </div>
+                
+                {lose && <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Try again</a>}
+                {win && 
+                    <div className="Hangman-reset">
+                        Congratulations, you nailed it! <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Play again?</a>
+                    </div>
+                }
             </div>
          );
     }
