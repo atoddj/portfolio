@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Letter from './Letter';
+import {dictionary as randomWord} from './dictionary';
 import './Hangman.css';
 
 /*
@@ -11,13 +12,13 @@ class Hangman extends Component {
     static defaultProps = {
         alphabet: ['a','b','c','d','e','f','g','h','i','j','k','l',
         'm','n','o','p','q','r','s','t','u','v','w','x','y','z'],
-        maxWrongGuesses: 10
+        maxWrongGuesses: 6
     }      
     constructor(props) {
         super(props);
         this.state = { 
             guesses: this.formatData(this.props.alphabet),
-            word: 'apple'.split(''),
+            word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
             guessValue: '',
             errorMessage: '',
             wrongGuesses: this.props.maxWrongGuesses
@@ -36,7 +37,7 @@ class Hangman extends Component {
         let currGuess = this.state.guessValue.toLowerCase();
         let result = this.state.guesses.find((item) => item.letter === currGuess);
         let correctStatus = this.state.word.findIndex(el => el === currGuess);
-        if(result && correctStatus === -1) {
+        if(result.guessed === false && correctStatus === -1) {
             this.setState((prevState) => ({wrongGuesses: prevState.wrongGuesses -1}));
         }
 
@@ -58,9 +59,11 @@ class Hangman extends Component {
         this.setState({guessValue: event.target.value});
     }
 
-    render() { 
+    render() {
+        let lose = this.state.wrongGuesses === 0;
         return ( 
             <div className="Hangman">
+                {lose && <div class="Hangman-lose">You lose, try again</div>}
                 <h1 className="Hangman-list-description">{this.state.wrongGuesses} incorrect guesses left</h1>
                 <ul className="Hangman-list">
                     {this.state.guesses.map((item) => (
@@ -69,10 +72,10 @@ class Hangman extends Component {
                 </ul>
 
                 <form className="Hangman-guess" onSubmit={this.handleSubmit}>
-                    <label>Make a guess
-                    <input type="text" value={this.state.guessValue} onChange={this.handleChange} maxLength="1" onKeyUp={this.handleKeyUp} />
+                    <label>Guess a letter 
+                    <input type="text" value={this.state.guessValue} onChange={this.handleChange} maxLength="1" onKeyUp={this.handleKeyUp} disabled={lose}/>
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit" disabled={lose} />
                 </form>
                 {this.state.errorMessage && 
                     <div className="Hangman-error">
@@ -83,7 +86,7 @@ class Hangman extends Component {
                 <div className="Hangman-word">
                     {this.state.word.map((l) => (
                         <div className="Hangman-word-letter">
-                            { this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l }
+                            { this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l || lose && <span style={{color: 'red'}}> {l} </span> }
                         </div>
                         ))
                     }
