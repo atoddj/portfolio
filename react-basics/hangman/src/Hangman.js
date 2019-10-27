@@ -86,7 +86,7 @@ class Hangman extends Component {
                 <div className="Hangman-word">
                     {this.state.word.map((l) => (
                         <div className="Hangman-word-letter">
-                            { this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l || lose && <span style={{color: 'red'}}> {l} </span> }
+                            { (this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l) || (lose && <span style={{color: 'red'}}> {l} </span>) }
                         </div>
                         ))
                     }
