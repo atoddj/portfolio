@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import Letter from './Letter';
 import {dictionary as randomWord} from './dictionary';
 import './Hangman.css';
-const alphabet = ['abcdefghijklmnopqrstuvwxyz'];
+const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+const alphabetObject = alphabet.split('').map(item => ({letter: item, guessed: false}));
 
 class Hangman extends Component {
     static defaultProps = {
@@ -11,7 +12,7 @@ class Hangman extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            guesses: alphabet.split('').map(item => ({letter: item, guessed: false})),
+            guesses: alphabetObject,
             word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
             guessValue: '',
             errorMessage: '',
@@ -51,7 +52,7 @@ class Hangman extends Component {
 
     resetGame() {
         this.setState({
-            guesses: this.formatData(this.props.alphabet), 
+            guesses: alphabetObject,
             word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
             guessValue: '', 
             errorMessage: '',
@@ -69,7 +70,7 @@ class Hangman extends Component {
                 word += el.innerText;
             };
         }
-        if (JSON.stringify(word.split('')) === JSON.stringify(this.state.word) && !this.state.victory){
+        if (JSON.stringify(word.split('')) === JSON.stringify(this.state.word) && !this.state.victory && this.state.wrongGuesses > 0){
             this.setState({victory: true});
         }
     }
@@ -141,7 +142,7 @@ class Hangman extends Component {
                     { this.generateWord() }
                 </div>
                 { this.state.victory && this.displayGameOver(true) }
-                { this.state.wrongGuesses === 0 && this.displayGameOver() }
+                { this.state.wrongGuesses === 0 && this.displayGameOver(false) }
             </div>
          );
     }
