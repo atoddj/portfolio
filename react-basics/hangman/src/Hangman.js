@@ -42,9 +42,9 @@ class Hangman extends Component {
             this.setState({errorMessage: 'You have already guessed this letter'})
         } else if (result && result.guessed === false) {
             this.setState((prevState) => ({
+                errorMessage: '', guessValue: '',
                 guesses: prevState.guesses.map(el => el.letter === currGuess ? {...el, guessed: true} : el)
             }));
-            this.setState({errorMessage: '', guessValue: ''});
         } else {
             this.setState({errorMessage: 'Please input a valid character [A-Z]'})
         }
@@ -81,53 +81,76 @@ class Hangman extends Component {
         }
     }
 
-    render() {
+    displayHeading() {
+        return(
+            this.state.wrongGuesses === 0 ? 
+            <h1 className="Hangman-list-description" style={{color: 'red'}}>You lose, try again</h1> :
+            <h1 className="Hangman-list-description">{this.state.wrongGuesses} incorrect guesses left</h1>
+        )
+    }
+
+    displayGuesses() {
+        return(
+            this.state.guesses.map(item => item.guessed && <Letter data={item} />)
+        )
+    }
+
+    displayForm() {
         let lose = this.state.wrongGuesses === 0;
         let win = this.state.victory;
+        return(
+            <form className="Hangman-guess" onSubmit={this.handleSubmit}>
+                <label>Guess a letter <input type="text" 
+                    value={this.state.guessValue} 
+                    onChange={this.handleChange} 
+                    maxLength="1" 
+                    onKeyUp={this.handleKeyUp} 
+                    disabled={lose || win}/>
+                </label>
+                <input type="submit" value="Submit" disabled={lose || win} />
+            </form>
+        )
+    }
+
+    generateWord() {
+        let lose = this.state.wrongGuesses === 0;
+        return(
+            this.state.word.map((l) => (
+                <div className="Hangman-word-letter">
+                    { (this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l) || (lose && <span style={{color: 'red'}}> {l} </span>) }
+                </div>
+            ))
+        )
+    }
+
+    displayGameOver(win) {
+        return (
+            win ?  
+            <div className="Hangman-reset">
+                Congratulations, you nailed it! <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Play again?</a>
+            </div> : 
+            <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Try again</a>
+        )
+    }
+
+    render() {
         return ( 
             <div className="Hangman">
-                { lose 
-                    ? <h1 className="Hangman-list-description" style={{color: 'red'}}>You lose, try again</h1> 
-                    : <h1 className="Hangman-list-description">{this.state.wrongGuesses} incorrect guesses left</h1>
-                }
+                { this.displayHeading() }
 
                 <ul className="Hangman-list">
-                    {this.state.guesses.map((item) => (
-                        item.guessed && <Letter data={item} />
-                    ))}
+                    { this.displayGuesses() }
                 </ul>
 
-                <form className="Hangman-guess" onSubmit={this.handleSubmit}>
-                    <label>Guess a letter <input type="text" 
-                        value={this.state.guessValue} 
-                        onChange={this.handleChange} 
-                        maxLength="1" 
-                        onKeyUp={this.handleKeyUp} 
-                        disabled={lose || win}/>
-                    </label>
-                    <input type="submit" value="Submit" disabled={lose || win} />
-                </form>
-                {this.state.errorMessage && 
-                    <div className="Hangman-error">
-                        {this.state.errorMessage}
-                    </div> 
-                }
+                { this.displayForm() }
+                
+                {this.state.errorMessage && <div className="Hangman-error">{this.state.errorMessage}</div> }
 
                 <div className="Hangman-word">
-                    {this.state.word.map((l) => (
-                        <div className="Hangman-word-letter">
-                            { (this.state.guesses.find((item) => item.letter === l && item.guessed === true) && l) || (lose && <span style={{color: 'red'}}> {l} </span>) }
-                        </div>
-                        ))
-                    }
+                    { this.generateWord() }
                 </div>
-                
-                {lose && <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Try again</a>}
-                {win && 
-                    <div className="Hangman-reset">
-                        Congratulations, you nailed it! <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Play again?</a>
-                    </div>
-                }
+                { this.state.victory && this.displayGameOver(true) }
+                { this.state.wrongGuesses === 0 && this.displayGameOver() }
             </div>
          );
     }
