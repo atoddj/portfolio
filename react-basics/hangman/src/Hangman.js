@@ -62,7 +62,7 @@ class Hangman extends Component {
     }
 
     componentDidUpdate() {
-        var correctLetters = document.querySelectorAll('.Hangman-word-letter');
+        let correctLetters = document.querySelectorAll('.Hangman-word-letter');
         let word = '' 
         for (let i = 0; i < correctLetters.length; i++) {
             const el = correctLetters[i];
@@ -70,7 +70,7 @@ class Hangman extends Component {
                 word += el.innerText;
             };
         }
-        if (JSON.stringify(word.split('')) === JSON.stringify(this.state.word) && !this.state.victory && this.state.wrongGuesses > 0){
+        if (word === this.state.word.join('') && !this.state.victory && this.state.wrongGuesses > 0){
             this.setState({victory: true});
         }
     }
