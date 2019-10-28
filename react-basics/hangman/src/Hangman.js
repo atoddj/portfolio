@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 import Letter from './Letter';
 import {dictionary as randomWord} from './dictionary';
 import './Hangman.css';
+const alphabet = ['abcdefghijklmnopqrstuvwxyz'];
 
 class Hangman extends Component {
     static defaultProps = {
-        alphabet: ['a','b','c','d','e','f','g','h','i','j','k','l',
-        'm','n','o','p','q','r','s','t','u','v','w','x','y','z'],
         maxWrongGuesses: 6
-    }      
+    }
     constructor(props) {
         super(props);
         this.state = { 
-            guesses: this.formatData(this.props.alphabet),
+            guesses: alphabet.split('').map(item => ({letter: item, guessed: false})),
             word: randomWord[Math.floor(Math.random() * randomWord.length)].split(''),
             guessValue: '',
             errorMessage: '',
@@ -22,12 +21,6 @@ class Hangman extends Component {
          this.handleChange = this.handleChange.bind(this);
          this.handleSubmit = this.handleSubmit.bind(this);
          this.resetGame = this.resetGame.bind(this);
-    }
-
-    formatData(alphabet) {
-        return alphabet.map((item, index) => {
-            return {letter: item, guessed: false};
-        });
     }
 
     handleSubmit(event) {
@@ -90,9 +83,7 @@ class Hangman extends Component {
     }
 
     displayGuesses() {
-        return(
-            this.state.guesses.map(item => item.guessed && <Letter data={item} />)
-        )
+        return( this.state.guesses.map(item => item.guessed && <Letter data={item} />) )
     }
 
     displayForm() {
