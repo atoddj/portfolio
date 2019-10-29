@@ -117,11 +117,9 @@ class Hangman extends Component {
 
     displayGameOver(win) {
         return (
-            win ?  
-            <div className="Hangman-reset">
-                Congratulations, you nailed it! <button className="Hangman-reset" onClick={this.resetGame}>Play again?</button>
-            </div> : 
-            <button className="Hangman-reset" onClick={this.resetGame}>Try again?</button>
+            win
+            ? <div>Congratulations, you nailed it! <button className="Hangman-reset" onClick={this.resetGame}>Play again?</button></div>
+            : <button className="Hangman-reset" onClick={this.resetGame}>Try again?</button>
         )
     }
 
