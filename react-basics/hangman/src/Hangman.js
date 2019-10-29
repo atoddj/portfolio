@@ -119,9 +119,9 @@ class Hangman extends Component {
         return (
             win ?  
             <div className="Hangman-reset">
-                Congratulations, you nailed it! <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Play again?</a>
+                Congratulations, you nailed it! <button className="Hangman-reset" onClick={this.resetGame}>Play again?</button>
             </div> : 
-            <a href="/#" className="Hangman-reset" onClick={this.resetGame}>Try again</a>
+            <button className="Hangman-reset" onClick={this.resetGame}>Try again?</button>
         )
     }
 

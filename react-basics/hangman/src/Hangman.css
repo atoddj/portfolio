@@ -45,4 +45,9 @@
 
 .Hangman-reset {
     margin-top:3em;
+    background:none;
+    border: none;
+    color: royalblue;
+    cursor: pointer;
+    text-decoration: underline;
 }
