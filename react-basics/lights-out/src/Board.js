@@ -9,30 +9,53 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = {  }
+        this.handleClick = this.handleClick.bind(this);
     }
-    generateRandomBoard() {
-        //each row AND column must contain an even number of 'on' lights to be solvable
-        let data = [ 
-            {row: 0, col: 0, light: true}, {row: 0, col:1, light: true}, {row: 0, col:2, light: false}, {row: 0, col:3, light: false}, {row: 0, col: 4, light: false},
-            {row: 1, col: 0, light: false}, {row: 1, col: 1, light: false}, {row: 1, col: 2, light: false}, {row: 1, col: 3, light: false}, {row: 1, col: 4, light: false},
-            {row: 2, col: 0, light: true}, {row: 2, col: 1, light: true}, {row: 2, col: 2, light: false}, {row: 2, col: 3, light: true}, {row: 2, col: 4, light: true},
-            {row: 3, col: 0, light: false}, {row: 3, col: 1, light: false}, {row: 3, col: 2, light: false}, {row: 3, col: 3, light: false}, {row: 3, col: 4, light: false},
-            {row: 4, col: 0, light: false}, {row: 4, col: 1, light: false}, {row: 4, col: 2, light: false}, {row: 4, col: 3, light: true}, {row: 4, col: 4, light: true}
-         ];
-
+    generateBoard() {
          let gridSize = Array.from({length: this.props.boardSize ** 2});
          let board = [];
          for (let i = 0; i < gridSize.length; i++) {
-            var random_boolean = Math.random() >= 0.5;
-             board[i] = <Cell key={i} lightOn={random_boolean} />;
+             board[i] = <Cell key={i} handleClick={this.handleClick} />;
          }
          return board;
+    }
+    handleClick() {
+        // 5x5 grid example
+        //top row
+        //corners 
+        // if 0, toggle 0, 1 and 5
+        // if 1, toggle 1, 0, 2, and 6
+        // if 2, toggle 2, 1, 3, and 7
+        // if 3, toggle 3, 2, 4, and 8
+        // if 4, toggle 4, 3, and 9
+
+        //second row
+        // if 5, toggle 5, 6, 0 and 10
+        // if 6, toggle 6, 5, 7, 1, and 11
+        // if 7, toggle self, self-1, self+1, self-gridSize, self+gridSize
+
+        /*----------------
+        calculate columns and rows based on grid size
+
+        numRows = gridSize;
+        numCols = gridSize;
+
+        --------------------*/
+        
+        console.log('clicked');
+    }
+    randomClick() {
+        console.log('clicking random number of random tiles');
     }
     render() { 
         return ( 
             <div className="Board">
                 <h1 className="Board-title">Board</h1>
-                { this.generateRandomBoard() }
+                { this.generateBoard() }
+                { /* simulate clicks for an always playable game */
+                    this.randomClick()
+                }
+                
             </div>
         );
     }
