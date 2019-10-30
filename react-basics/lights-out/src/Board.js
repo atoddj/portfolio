@@ -24,7 +24,7 @@ class Board extends Component {
          let board = [];
          for (let i = 0; i < gridSize.length; i++) {
             var random_boolean = Math.random() >= 0.5;
-             board[i] = <Cell key={i} onOff={random_boolean} />;
+             board[i] = <Cell key={i} lightOn={random_boolean} />;
          }
          return board;
     }
