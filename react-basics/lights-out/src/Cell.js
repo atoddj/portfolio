@@ -3,7 +3,10 @@ import './Cell.css';
 
 class Cell extends Component {
     render() { 
-        return ( <h2>Cell</h2> );
+        return ( 
+            <div className={"Cell " + (this.props.onOff ? 'on' : 'off')}>
+            </div>
+        );
     }
 }
  
