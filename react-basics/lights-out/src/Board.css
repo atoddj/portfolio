@@ -1,0 +1,12 @@
+.Board {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width:30%;
+    margin: 0 auto;
+    color: #cccccc;
+}
+
+.Board-title {
+    flex-basis: 100%;
+}

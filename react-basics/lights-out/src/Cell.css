@@ -1,0 +1,15 @@
+.Cell {
+    flex-grow: 1;
+    width: 19%;
+    height:100px;
+    border: 1px solid gray;
+    align-items: center;
+}
+
+.Cell.off {
+    background-color: darkgrey;
+}
+
+.Cell.on {
+    background-color: darkcyan;
+}
