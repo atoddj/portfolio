@@ -3,9 +3,6 @@
     width: 19%;
     height:100px;
     border: 1px solid gray;
-}
-
-.Cell.off {
     background-color: darkgrey;
 }
 
