@@ -9,10 +9,27 @@ class Board extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            grid: Array.from({length: this.props.boardSize ** 2}).map((el, index) => ({value: index, light: ''}))
-         }
+            grid: this.createGridObj()
+        }
         this.handleClick = this.handleClick.bind(this);
     }
+
+    createGridObj() {
+        let row = 0;
+        let col = 0;
+        let gridObj = Array.from({length: this.props.boardSize ** 2})
+            .map((el, index) => {
+                let obj = {value: index, light: '', row: row, col: col}
+                col++;
+                if (col>this.props.boardSize-1) { 
+                    col=0; 
+                    row++
+                }
+                return obj;
+            });
+            return gridObj;
+    }
+
     generateBoard() {
         let board = [];
          this.state.grid.map((item, index) => (
@@ -50,7 +67,7 @@ class Board extends Component {
             grid: state.grid.map((item) => (item.value === number ? {...item, light: light} : item))
         }))
     }
-    
+
     randomClick() {
         this.setState({boardGenerated: true});
         console.log('generated random board');
