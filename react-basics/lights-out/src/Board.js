@@ -8,18 +8,20 @@ class Board extends Component {
     };
     constructor(props) {
         super(props);
-        this.state = {  }
+        this.state = { 
+            grid: Array.from({length: this.props.boardSize ** 2}).map((el, index) => ({value: index, light: ''}))
+         }
         this.handleClick = this.handleClick.bind(this);
     }
     generateBoard() {
-         let gridSize = Array.from({length: this.props.boardSize ** 2});
-         let board = [];
-         for (let i = 0; i < gridSize.length; i++) {
-             board[i] = <Cell key={i} handleClick={this.handleClick} />;
-         }
+        let board = [];
+         this.state.grid.map((item, index) => (
+             board[index] = <Cell key={index} number={index} handleClick={this.handleClick} light={item.light} />
+         ));
+         !this.state.boardGenerated && this.randomClick();
          return board;
     }
-    handleClick() {
+    handleClick(e) {
         // 5x5 grid example
         //top row
         //corners 
@@ -41,21 +43,24 @@ class Board extends Component {
         numCols = gridSize;
 
         --------------------*/
-        
-        console.log('clicked');
+        let number = Number(e.target.getAttribute('number'));
+        let light = this.state.grid.find(item => item.value === number).light === '' ? 'on' : '';
+
+        this.setState(state => ({
+            grid: state.grid.map((item) => (item.value === number ? {...item, light: light} : item))
+        }))
     }
+    
     randomClick() {
-        console.log('clicking random number of random tiles');
+        this.setState({boardGenerated: true});
+        console.log('generated random board');
     }
+
     render() { 
         return ( 
             <div className="Board">
                 <h1 className="Board-title">Board</h1>
                 { this.generateBoard() }
-                { /* simulate clicks for an always playable game */
-                    this.randomClick()
-                }
-                
             </div>
         );
     }
