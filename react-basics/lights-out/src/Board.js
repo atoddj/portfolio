@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Cell from './Cell';
 import './Board.css';
 
+
 class Board extends Component {
     static defaultProps = {
         boardSize: 5
@@ -12,6 +13,10 @@ class Board extends Component {
             grid: this.createGridObj()
         }
         this.handleClick = this.handleClick.bind(this);
+    }
+
+    componentDidMount() {
+        !this.state.boardGenerated && this.randomClick();
     }
 
     createGridObj() {
@@ -35,13 +40,17 @@ class Board extends Component {
          this.state.grid.map((item, index) => (
              board[index] = <Cell key={index} number={index} handleClick={this.handleClick} light={item.light} />
          ));
-         !this.state.boardGenerated && this.randomClick();
          return board;
     }
 
-    handleClick(e) {
-        let number = Number(e.target.getAttribute('number'));
-        let coords = this.state.grid.find(item => item.value === number);
+    handleClick(e,y) {
+        let coords;
+        if (arguments.length > 1) {
+            coords = {col: y, row:e }
+        } else {
+            let number = Number(e.target.getAttribute('number'));
+            coords = this.state.grid.find(item => item.value === number);
+        }
         let coordsArr = [];
         coordsArr.push([coords.row, coords.col]);
         if(coords.col > 0) { coordsArr.push([coords.row, coords.col-1]) }
@@ -61,7 +70,12 @@ class Board extends Component {
 
     randomClick() {
         this.setState({boardGenerated: true});
-        console.log('generated random board');
+        let numClicks = Array.from({length: Math.floor(Math.random() * 15) + 1});
+        numClicks.forEach(() => {
+            let value = Math.floor(Math.random() * this.props.boardSize**2);
+            let clicked = this.state.grid.find(el => el.value === value);
+            this.handleClick(clicked.row, clicked.col);
+        });
     }
 
     render() { 
