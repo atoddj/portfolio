@@ -13,6 +13,7 @@ class Board extends Component {
             grid: this.createGridObj()
         }
         this.handleClick = this.handleClick.bind(this);
+        this.resetGame = this.resetGame.bind(this);
     }
 
     componentDidMount() {
@@ -59,13 +60,22 @@ class Board extends Component {
         if(coords.row < this.props.boardSize-1) { coordsArr.push([coords.row+1, coords.col]) }
         coordsArr.forEach((item) => {
             this.toggleLight(item[0], item[1])
-        })
+        });
     }
 
     toggleLight(x,y) {
         this.setState(prevState => ({
             grid: prevState.grid.map((item) => (item.row === x && item.col === y ? {...item, light: !item.light} : item))
-        }))
+        }), () => {
+            this.checkVictory();
+        })
+    }
+
+    checkVictory() {
+        let lightsOn = this.state.grid.find(item => item.light === true);
+        if (!lightsOn) {
+            this.setState({victory: true})
+        }
     }
 
     randomClick() {
@@ -78,11 +88,26 @@ class Board extends Component {
         });
     }
 
+    resetGame() {
+        this.setState(prevState => ({
+            victory: false,
+            grid: this.createGridObj(),
+            boardGenerated: false
+        }))
+        this.randomClick();
+    }
+
     render() { 
         return ( 
             <div className="Board">
                 <h1 className="Board-title">Board</h1>
                 { this.generateBoard() }
+                { this.state.victory && 
+                <div className="Board-victory">
+                    <span className="Board-message">YOU WIN YO</span>
+                    <button className="Board-reset" onClick={this.resetGame}>Play again?</button>
+                </div> 
+                }
             </div>
         );
     }
