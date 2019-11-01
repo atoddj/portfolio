@@ -10,3 +10,28 @@
 .Board-title {
     flex-basis: 100%;
 }
+.Board-victory {
+    position: fixed;
+    font-size:4em;
+    display: flex; 
+    align-items:center;
+    justify-content:center;
+    width: 100%; 
+    height: 100%; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,1); 
+    z-index: 2; 
+    flex-wrap: wrap;
+}
+
+.Board-message {
+    width: 100%;
+}
+
+.Board-reset {
+    font-size: .5em;
+    cursor: pointer;
+}
