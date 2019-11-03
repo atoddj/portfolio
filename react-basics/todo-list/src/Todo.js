@@ -4,20 +4,32 @@ import './Todo.css';
 class Todo extends Component {
     constructor(props) {
         super(props);
-        this.state = { completed: false };
-        this.markDone = this.markDone.bind(this);
+        this.state = { completed: false, editing: false };
+        this.handleClick = this.handleClick.bind(this);
     }
 
-    markDone() {
-        let prevState = this.state.completed;
+    handleClick(e) {
+        let prevValue = (e.target.getAttribute('value') === 'true');
+        let keyName = e.target.getAttribute('name');
         this.setState({
-            completed: !prevState
+            [keyName]: !prevValue
         })
     }
     render() { 
+        if(this.state.editing) {
+            return (
+               <form onSubmit={this.handleSubmit}>
+                   <input type="text" onChange={this.handleChange} value={this.props.task} />
+                   <button>Update</button>
+               </form>
+            )
+        } 
         return ( 
-            <div className={"Todo" + (this.state.completed ? " completed": '')} onClick={this.markDone}>
-                {this.props.task}
+            <div className={"Todo" + (this.state.completed ? " completed": '')} >
+                <div name="completed" onClick={this.handleClick} value={this.state.completed}>
+                    {this.props.task} 
+                </div>
+                <div className="fas fa-pencil-alt" name="editing" onClick={this.handleClick} value={this.state.editing} />
             </div>
          );
     }
