@@ -1,0 +1,36 @@
+.btn, input {
+	line-height: 2em;
+	border-radius: 3px;
+	border: 0;
+	display: inline-block;
+	margin: 15px 0;
+	padding: 0.2em 1em;
+	font-size: 1em;
+}
+
+.btn-add {
+    background: #ddd;
+    color: #fefefe;
+    border-color: #ddd;
+    min-width: 13%;
+    pointer-events: none;
+    transition: all ease-in 0.25s;
+    font-size: 2.2em;
+    line-height: 0.5em;
+    padding: 0.3em 0.3em;
+    float: right;
+    height: 40px;
+  }
+
+  input[type='text'] {
+    border: 1px solid #ddd; 
+    min-width: 75%;
+    transition: all ease-in 0.25s;
+  }
+
+  label {
+      position: absolute;
+      top:-100000px;
+      left:-100000px;
+  }
+

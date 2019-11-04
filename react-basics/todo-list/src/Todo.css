@@ -1,10 +1,11 @@
 
 .Todo {
-    display:flex;
+    display:inline-block;
     justify-content: space-around;
     width: 50%;
-    margin: 0 auto 10px;
+    margin: 10px auto 10px;
 }
+
 .Todo.completed {
     text-decoration: line-through;
 }
