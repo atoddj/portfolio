@@ -4,8 +4,11 @@ import './Todo.css';
 class Todo extends Component {
     constructor(props) {
         super(props);
-        this.state = { completed: false, editing: false };
+        this.state = { completed: false, editing: false, newTask: this.props.task };
         this.handleClick = this.handleClick.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleRemove = this.handleRemove.bind(this);
     }
 
     handleClick(e) {
@@ -15,11 +18,28 @@ class Todo extends Component {
             [keyName]: !prevValue
         })
     }
+
+    handleChange(e) {
+        this.setState({[e.target.name]: e.target.value});
+    }
+
+    handleRemove() {
+        this.props.removeTodo(this.props.id);
+    }
+
+    handleSubmit(e) {
+        e.preventDefault();
+        this.props.updateTask(this.props.id, this.state.newTask);
+        this.setState({
+            editing: false
+        })
+    }
+
     render() { 
         if(this.state.editing) {
             return (
                <form onSubmit={this.handleSubmit}>
-                   <input type="text" onChange={this.handleChange} value={this.props.task} />
+                   <input type="text" onChange={this.handleChange} value={this.state.newTask} name="newTask" />
                    <button>Update</button>
                </form>
             )
@@ -30,6 +50,7 @@ class Todo extends Component {
                     {this.props.task} 
                 </div>
                 <div className="fas fa-pencil-alt" name="editing" onClick={this.handleClick} value={this.state.editing} />
+                <button onClick={this.handleRemove}>X</button>
             </div>
          );
     }
