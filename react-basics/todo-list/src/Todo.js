@@ -45,8 +45,8 @@ class Todo extends Component {
             )
         } 
         return ( 
-            <div className={"Todo" + (this.state.completed ? " completed": '')} >
-                <div name="completed" onClick={this.handleClick} value={this.state.completed}>
+            <div>
+                <div className={"Todo" + (this.state.completed ? " completed": '')}name="completed" onClick={this.handleClick} value={this.state.completed}>
                     {this.props.task} 
                 </div>
                 <div className="fas fa-pencil-alt" name="editing" onClick={this.handleClick} value={this.state.editing} />

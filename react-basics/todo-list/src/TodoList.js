@@ -35,6 +35,7 @@ class TodoList extends Component {
         return ( 
             <div className="Todo-List">
                 <h1>Todo List!</h1>
+                <TodoForm createTask={this.addTask}/>
                 {this.state.tasks.map(task => (
                     <Todo 
                         key={task.id}
@@ -44,7 +45,6 @@ class TodoList extends Component {
                         id={task.id}
                     />
                 ))}
-                <TodoForm createTask={this.addTask}/>
             </div>
          );
     }
