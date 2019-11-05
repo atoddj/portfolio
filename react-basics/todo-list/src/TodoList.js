@@ -6,23 +6,21 @@ import './TodoList.css';
 class TodoList extends Component {
     constructor(props) {
         super(props);
-        this.state = { tasks: []  }
-        this.addTask = this.addTask.bind(this);
-        this.updateTask = this.updateTask.bind(this);
+        this.state = { tasks: [] }
+        this.create = this.create.bind(this);
+        this.update = this.update.bind(this);
         this.remove = this.remove.bind(this);
     }
 
-    addTask(task) {
+    create(task) {
         this.setState(prevState => ({
             tasks: [...prevState.tasks, task ] 
         }))
     }
 
-    updateTask(id, newTask) {
-        let foundTask = this.state.tasks.find(task => task.id === id);
-        foundTask.task = newTask;
+    update(id, newTask) {
         this.setState(prevState => ({
-            tasks: prevState.tasks.map(task => task = task.id === id ? foundTask : task)
+            tasks: prevState.tasks.map(task => task = task.id === id ? {...task, task: newTask} : task)
         }))
     }
     remove(id) {
@@ -35,13 +33,13 @@ class TodoList extends Component {
         return ( 
             <div className="Todo-List">
                 <h1>Todo List!</h1>
-                <TodoForm createTask={this.addTask}/>
+                <TodoForm createTask={this.create}/>
                 {this.state.tasks.map(task => (
                     <Todo 
                         key={task.id}
                         task={task.task}
-                        updateTask={this.updateTask}
-                        removeTodo={this.remove}
+                        updateTask={this.update}
+                        removeTask={this.remove}
                         id={task.id}
                     />
                 ))}

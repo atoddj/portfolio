@@ -24,7 +24,7 @@ class Todo extends Component {
     }
 
     handleRemove() {
-        this.props.removeTodo(this.props.id);
+        this.props.removeTask(this.props.id);
     }
 
     handleSubmit(e) {
