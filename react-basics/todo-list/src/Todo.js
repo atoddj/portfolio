@@ -49,8 +49,8 @@ class Todo extends Component {
                 <div className={"Todo" + (this.state.completed ? " completed": '')}name="completed" onClick={this.handleClick} value={this.state.completed}>
                     {this.props.task} 
                 </div>
-                <div className="fas fa-pencil-alt" name="editing" onClick={this.handleClick} value={this.state.editing} />
-                <button onClick={this.handleRemove}>X</button>
+                <div className="edit fas fa-pencil-alt" name="editing" onClick={this.handleClick} value={this.state.editing} />
+                <div className="delete far fa-trash-alt" onClick={this.handleRemove} />
             </div>
          );
     }

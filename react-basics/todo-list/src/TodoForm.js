@@ -12,7 +12,7 @@ class TodoForm extends Component {
 
     handleSubmit(e){
         e.preventDefault();
-        this.props.createTask({...this.state, id: uuid()});
+        this.props.createTask();
         this.setState({task: ""})
     }
 

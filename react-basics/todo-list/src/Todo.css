@@ -9,3 +9,13 @@
 .Todo.completed {
     text-decoration: line-through;
 }
+
+div.edit {
+    margin-right: 10px;
+    cursor:pointer;
+}
+
+div.delete {
+    color: red;
+    cursor: pointer;
+}
