@@ -6,7 +6,7 @@ class Game extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            dice: Array.from({length: 5}).map((item, index) => ({locked: false, value: 0, id: uuid()})),
+            dice: Array.from({length: 5}).map(() => ({locked: false, value: 0, id: uuid()})),
             rolls: 3
          }
          this.rollDice = this.rollDice.bind(this);
@@ -21,7 +21,7 @@ class Game extends Component {
 
     toggleLock(id) {
         this.setState(st => ({
-            dice: st.dice.map(item => (item.id === id ? {...item, locked: true} : item))
+            dice: st.dice.map(item => (item.id === id ? {...item, locked: !item.locked} : item))
         }))
     }
 
