@@ -15,7 +15,8 @@ class Game extends Component {
 
     rollDice() {
         this.setState(st => ({ 
-            dice: st.dice.map(item => (item.locked === false ? { ...item, value: Math.floor(Math.random() * 6) +1 } : item))
+            dice: st.dice.map(item => (item.locked === false ? { ...item, value: Math.floor(Math.random() * 6) +1 } : item)),
+            rolls: st.rolls - 1
         }))
     }
 
@@ -26,14 +27,14 @@ class Game extends Component {
     }
 
     render() { 
-        const {dice} = this.state;
+        const {dice,rolls} = this.state;
         const diceList = dice.map((item) => (
             <Die key={item.id} value={item.value} id={item.id} lockDie={this.toggleLock} />
         ))
         return (
             <div className="Game">
                 {diceList}
-                <button onClick={this.rollDice}>Roll!</button>
+                <button onClick={this.rollDice} disabled={rolls === 0}>{rolls} Rolls left!</button>
             </div>
         );
     }
