@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 import Die from './Die';
+import './Game.css';
 
 class Game extends Component {
     constructor(props) {
@@ -33,7 +34,9 @@ class Game extends Component {
         ))
         return (
             <div className="Game">
-                {diceList}
+                <div className="Game-dice">
+                    {diceList}
+                </div>
                 <button onClick={this.rollDice} disabled={rolls === 0}>{rolls} Rolls left!</button>
             </div>
         );

@@ -1,4 +1,14 @@
 import React, { Component } from 'react';
+import './Die.css';
+
+const fontAwesome = {
+    1: "fas fa-dice-one",
+    2: "fas fa-dice-two",
+    3: "fas fa-dice-three",
+    4: "fas fa-dice-four",
+    5: "fas fa-dice-five",
+    6: "fas fa-dice-six"
+}
 
 class Die extends Component {
     constructor(props) {
@@ -15,9 +25,7 @@ class Die extends Component {
     render() { 
         const {value} = this.props;
         return (
-            <div className="Die" onClick={this.handleClick}>
-                {value}
-            </div>
+            <div className={'Die ' + fontAwesome[value]} onClick={this.handleClick} />
         )
     }
 }
