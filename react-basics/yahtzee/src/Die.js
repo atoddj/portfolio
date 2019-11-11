@@ -23,9 +23,13 @@ class Die extends Component {
     }
 
     render() { 
-        const {value} = this.props;
+        const {value,frozen} = this.props;
+        var classNames = `Die ${fontAwesome[value]}`;
+        if (frozen) {
+            classNames += ' frozen';
+        }
         return (
-            <div className={'Die ' + fontAwesome[value]} onClick={this.handleClick} />
+            <div className={classNames} onClick={this.handleClick} />
         )
     }
 }
