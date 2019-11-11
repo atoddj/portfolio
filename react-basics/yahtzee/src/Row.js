@@ -6,9 +6,12 @@ class Row extends Component {
         this.state = {  }
     }
     render() {
-        const {name} = this.props; 
+        const {name, score} = this.props; 
         return ( 
-            <div>{name}</div>
+            <div className="row">
+                <div>{name}</div>
+                <div>{score}</div>
+            </div>
          );
     }
 }

@@ -51,11 +51,13 @@ class Game extends Component {
         const upperScores = scores.filter(item => (item.type=== 'upper')).map(item => (
             <Row
                 name={item.name}
+                score={item.score}
             />
         ));
         const lowerScores = scores.filter(item => (item.type=== 'lower')).map(item => (
             <Row
                 name={item.name}
+                score={item.score}
             />
         ));
         console.log(upperScores);
