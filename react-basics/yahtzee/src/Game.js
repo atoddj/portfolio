@@ -62,9 +62,14 @@ class Game extends Component {
                 <button onClick={this.rollDice} disabled={rolls === 0}>{rolls} Rolls left!</button>
                 <div className="Game-scores">
                     <h2>Upper Section</h2>
-                    {upperScores}
+                    <ul>
+                        {upperScores}
+                    </ul>
+
                     <h2>Lower Section</h2>
-                    {lowerScores}
+                    <ul>
+                        {lowerScores}
+                    </ul>
                 </div>
             </div>
         );
