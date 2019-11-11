@@ -11,23 +11,24 @@ class Game extends Component {
             dice: Array.from({length: 5}).map(() => ({locked: false, value: 0, id: uuid()})),
             rolls: 3,
             scores: [
-                {name: 'Aces', type: 'upper', score: 0},
-                {name: 'Twos', type: 'upper', score: 0},
-                {name: 'Threes', type: 'upper', score: 0},
-                {name: 'Fours', type: 'upper', score: 0},
-                {name: 'Fives', type: 'upper', score: 0},
-                {name: 'Sixes', type: 'upper', score: 0},
-                {name: '3 of a kind', type: 'lower', score: 0},
-                {name: '4 of a kind', type: 'lower', score: 0},
-                {name: 'Full house', type: 'lower', score: 0},
-                {name: 'Small straight', type: 'lower', score: 0},
-                {name: 'Large straight', type: 'lower', score: 0},
-                {name: 'Yahtzee', type: 'lower', score: 0},
-                {name: 'Chance', type: 'lower', score: 0}
+                {name: 'Aces', value: 1, type: 'upper', score: 0},
+                {name: 'Twos', value: 2, type: 'upper', score: 0},
+                {name: 'Threes', value: 3, type: 'upper', score: 0},
+                {name: 'Fours', value: 4, type: 'upper', score: 0},
+                {name: 'Fives', value: 5, type: 'upper', score: 0},
+                {name: 'Sixes', value: 6, type: 'upper', score: 0},
+                {name: '3 of a kind', type: 'lower', score: 0, scoreFn: this.score3ofK},
+                {name: '4 of a kind', type: 'lower', score: 0, scoreFn: this.score4ofK},
+                {name: 'Full house', type: 'lower', score: 0, scoreFn: this.scoreFullHouse},
+                {name: 'Small straight', type: 'lower', score: 0, scoreFn: this.scoreSStraight},
+                {name: 'Large straight', type: 'lower', score: 0, scoreFn: this.scoreLStraight},
+                {name: 'Yahtzee', type: 'lower', score: 0, scoreFn: this.scoreYahtzee},
+                {name: 'Chance', type: 'lower', score: 0, scoreFn: this.scoreChance}
             ]
          }
          this.rollDice = this.rollDice.bind(this);
          this.toggleLock = this.toggleLock.bind(this);
+         this.scoreUpper = this.scoreUpper.bind(this);
     }
 
     rollDice() {
@@ -43,6 +44,19 @@ class Game extends Component {
         }))
     }
 
+    scoreUpper(val) {
+        const {dice} = this.state;
+        var score = 0;
+        dice.forEach(item => {
+            if (item.value === val) {
+                score += item.value;
+            }
+        })
+        this.setState(st => ({
+            scores: st.scores.map(item => (item.value === val ? {...item, score: score}: item))
+        }))
+    }
+
     render() { 
         const {dice,rolls,scores} = this.state;
         const diceList = dice.map((item) => (
@@ -52,6 +66,8 @@ class Game extends Component {
             <Row
                 name={item.name}
                 score={item.score}
+                scoreFn={this.scoreUpper}
+                value={item.value}
             />
         ));
         const lowerScores = scores.filter(item => (item.type=== 'lower')).map(item => (
@@ -60,7 +76,6 @@ class Game extends Component {
                 score={item.score}
             />
         ));
-        console.log(upperScores);
         return (
             <div className="Game">
                 <div className="Game-dice">
