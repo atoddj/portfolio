@@ -11,12 +11,12 @@ class Game extends Component {
             dice: Array.from({length: 5}).map(() => ({locked: false, value: 0, id: uuid()})),
             rolls: 3,
             scores: [
-                {name: 'Aces', value: 1, type: 'upper', score: 0},
-                {name: 'Twos', value: 2, type: 'upper', score: 0},
-                {name: 'Threes', value: 3, type: 'upper', score: 0},
-                {name: 'Fours', value: 4, type: 'upper', score: 0},
-                {name: 'Fives', value: 5, type: 'upper', score: 0},
-                {name: 'Sixes', value: 6, type: 'upper', score: 0},
+                {name: 'Aces', value: 1, type: 'upper', score: 0, counted: false},
+                {name: 'Twos', value: 2, type: 'upper', score: 0, counted: false},
+                {name: 'Threes', value: 3, type: 'upper', score: 0, counted: false},
+                {name: 'Fours', value: 4, type: 'upper', score: 0, counted: false},
+                {name: 'Fives', value: 5, type: 'upper', score: 0, counted: false},
+                {name: 'Sixes', value: 6, type: 'upper', score: 0, counted: false},
                 {name: '3 of a kind', type: 'lower', score: 0, scoreFn: this.score3ofK},
                 {name: '4 of a kind', type: 'lower', score: 0, scoreFn: this.score4ofK},
                 {name: 'Full house', type: 'lower', score: 0, scoreFn: this.scoreFullHouse},
@@ -53,14 +53,16 @@ class Game extends Component {
             }
         })
         this.setState(st => ({
-            scores: st.scores.map(item => (item.value === val ? {...item, score: score}: item))
+            scores: st.scores.map(item => ((item.value === val && !item.counted) ? {...item, score: score, counted: true}: item)),
+            rolls: 3,
+            dice: st.dice.map(item => ({...item, locked: false}))
         }))
     }
 
     render() { 
         const {dice,rolls,scores} = this.state;
         const diceList = dice.map((item) => (
-            <Die key={item.id} value={item.value} id={item.id} lockDie={this.toggleLock} />
+            <Die key={item.id} value={item.value} id={item.id} lockDie={this.toggleLock} frozen={item.locked} />
         ));
         const upperScores = scores.filter(item => (item.type=== 'upper')).map(item => (
             <Row
