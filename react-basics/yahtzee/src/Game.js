@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import uuid from 'uuid/v4';
 import Die from './Die';
+import Row from './Row';
 import './Game.css';
 
 class Game extends Component {
@@ -48,10 +49,14 @@ class Game extends Component {
             <Die key={item.id} value={item.value} id={item.id} lockDie={this.toggleLock} />
         ));
         const upperScores = scores.filter(item => (item.type=== 'upper')).map(item => (
-            <li>{item.name}</li>
+            <Row
+                name={item.name}
+            />
         ));
         const lowerScores = scores.filter(item => (item.type=== 'lower')).map(item => (
-            <li>{item.name}</li>
+            <Row
+                name={item.name}
+            />
         ));
         console.log(upperScores);
         return (
@@ -62,14 +67,11 @@ class Game extends Component {
                 <button onClick={this.rollDice} disabled={rolls === 0}>{rolls} Rolls left!</button>
                 <div className="Game-scores">
                     <h2>Upper Section</h2>
-                    <ul>
-                        {upperScores}
-                    </ul>
+                    {upperScores}
 
                     <h2>Lower Section</h2>
-                    <ul>
-                        {lowerScores}
-                    </ul>
+                    {lowerScores}
+
                 </div>
             </div>
         );
