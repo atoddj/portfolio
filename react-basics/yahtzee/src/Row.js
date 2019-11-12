@@ -8,8 +8,8 @@ class Row extends Component {
     }
 
     handleClick() {
-        const {value} = this.props
-        this.props.scoreFn(value);
+        const {value, name} = this.props
+        this.props.scoreFn(value, name);
     }
 
     render() {
