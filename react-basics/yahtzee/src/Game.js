@@ -145,6 +145,7 @@ class Game extends Component {
                 score={item.score}
                 scoreFn={this.scoreUpper}
                 value={item.value}
+                counted={item.counted}
             />
         ));
         const lowerScores = scores.filter(item => (item.type=== 'lower')).map(item => (
@@ -153,6 +154,7 @@ class Game extends Component {
                 score={item.score}
                 scoreFn={this[item.scoreFn]}
                 value={item.value}
+                counted={item.counted}
             />
         ));
         return (

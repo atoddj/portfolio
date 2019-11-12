@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Row.css';
 
 class Row extends Component {
     constructor(props) {
@@ -13,11 +14,11 @@ class Row extends Component {
     }
 
     render() {
-        const {name, score} = this.props; 
+        const {name, score, counted} = this.props;
         return ( 
             <div className="row" onClick={this.handleClick}>
                 <div>{name}</div>
-                <div>{score}</div>
+                <div className={`${(counted && score === 0)  ? 'error' : ''}`}>{score}</div>
             </div>
          );
     }
