@@ -19,17 +19,20 @@ class Game extends Component {
                 {name: 'Sixes', value: 6, type: 'upper', score: 0, counted: false},
                 {name: '3 of a kind', value: 3, type: 'lower', score: 0, counted: false, scoreFn: 'scoreXofKind'},
                 {name: '4 of a kind', value: 4, type: 'lower', score: 0, counted: false,  scoreFn: 'scoreXofKind'},
-                {name: 'Full house', type: 'lower', score: 0, counted: false, scoreFn: this.scoreFullHouse},
-                {name: 'Small straight', value: null, type: 'lower', counted: false, score: 0, scoreFn: this.scoreSStraight},
-                {name: 'Large straight', value: null, type: 'lower', counted: false, score: 0, scoreFn: this.scoreLStraight},
+                {name: 'Full house', value: 25, type: 'lower', score: 0, counted: false, scoreFn: 'scoreFullHouse'},
+                {name: 'Small straight', value: 4, type: 'lower', counted: false, score: 0, scoreFn: 'scoreStraight'},
+                {name: 'Large straight', value: 5, type: 'lower', counted: false, score: 0, scoreFn: 'scoreStraight'},
                 {name: 'Yahtzee', value: 5, type: 'lower', score: 0, counted: false, scoreFn: 'scoreXofKind'},
-                {name: 'Chance', value: null, type: 'lower', score: 0, counted: false, scoreFn: this.scoreChance}
+                {name: 'Chance', value: null, type: 'lower', score: 0, counted: false, scoreFn: 'scoreChance'}
             ]
          }
          this.rollDice = this.rollDice.bind(this);
          this.toggleLock = this.toggleLock.bind(this);
          this.scoreUpper = this.scoreUpper.bind(this);
          this.scoreXofKind = this.scoreXofKind.bind(this);
+         this.scoreFullHouse = this.scoreFullHouse.bind(this);
+         this.scoreStraight = this.scoreStraight.bind(this);
+         this.scoreChance = this.scoreChance.bind(this);
     }
 
     rollDice() {
@@ -45,17 +48,72 @@ class Game extends Component {
         }))
     }
 
+    scoreUpper(val, name) {
+        const {dice} = this.state;
+        var score = 0;
+        dice.forEach(item => {
+            if (item.value === val) {
+                score += item.value;
+            }
+        })
+        this.updateScore(name, score);
+    }
+
     scoreXofKind(numOfDice, name) {
-        //need name, number of same dice
+        const test = (Object.values(this.getFaceCounts()).filter(item => item >= numOfDice)) > 0;
+        if(test && numOfDice >= 5) {
+            this.updateScore(name, 50)
+        } else if (test) {
+            this.updateScore(name, this.sumOfDice())
+        } else {
+            this.updateScore(name, 0);
+        }
+    }
+
+    scoreFullHouse(score, name) {
+        const values = Object.values(this.getFaceCounts());
+        const test1 = (values.filter(item => item === 3) > 0);
+        const test2 = (values.filter(item => item === 2) > 0);
+        if(test1 && test2) {
+            this.updateScore(name, score);
+        } else {
+            this.updateScore(name, 0);
+        }
+    }
+
+    scoreStraight(numOfDice, name) {
+        const test = this.countSequence(numOfDice);
+        if(test) {
+            let score = name === 'Large straight' ? 40 : 30;
+            this.updateScore(name, score);
+        } else {
+            this.updateScore(name, 0)
+        }
+    }
+
+    scoreChance(val, name) {
+        const score = this.sumOfDice();
+        this.updateScore(name, score);
+    }
+
+    countSequence(diceInSequence) {
+        const values = Object.keys(this.getFaceCounts()).sort();
+        if(Number(values[0]) === values[diceInSequence-1] - (diceInSequence-1)) {
+            return true;
+        } else if (Number(values[1]) === values[diceInSequence-1] - (diceInSequence-1)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    getFaceCounts() {
         const {dice} = this.state;
         let counter = {};
-        dice.forEach(item => {
+        dice.forEach(item=> {
             counter[item.value] = (counter[item.value] || 0 ) + 1;
         })
-        const test = (Object.values(counter).filter(item => item >= numOfDice)) > 0;
-        if(test) {
-            this.updateScore(name, this.sumOfDice())
-        }
+        return counter;
     }
 
     updateScore(name, score) {
@@ -74,17 +132,6 @@ class Game extends Component {
             score += item.value;
         });
         return score;
-    }
-
-    scoreUpper(val, name) {
-        const {dice} = this.state;
-        var score = 0;
-        dice.forEach(item => {
-            if (item.value === val) {
-                score += item.value;
-            }
-        })
-        this.updateScore(name, score);
     }
 
     render() { 
