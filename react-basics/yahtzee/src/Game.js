@@ -17,18 +17,19 @@ class Game extends Component {
                 {name: 'Fours', value: 4, type: 'upper', score: 0, counted: false},
                 {name: 'Fives', value: 5, type: 'upper', score: 0, counted: false},
                 {name: 'Sixes', value: 6, type: 'upper', score: 0, counted: false},
-                {name: '3 of a kind', type: 'lower', score: 0, scoreFn: this.score3ofK},
-                {name: '4 of a kind', type: 'lower', score: 0, scoreFn: this.score4ofK},
-                {name: 'Full house', type: 'lower', score: 0, scoreFn: this.scoreFullHouse},
-                {name: 'Small straight', type: 'lower', score: 0, scoreFn: this.scoreSStraight},
-                {name: 'Large straight', type: 'lower', score: 0, scoreFn: this.scoreLStraight},
-                {name: 'Yahtzee', type: 'lower', score: 0, scoreFn: this.scoreYahtzee},
-                {name: 'Chance', type: 'lower', score: 0, scoreFn: this.scoreChance}
+                {name: '3 of a kind', value: 3, type: 'lower', score: 0, counted: false, scoreFn: 'scoreXofKind'},
+                {name: '4 of a kind', value: 4, type: 'lower', score: 0, counted: false,  scoreFn: 'scoreXofKind'},
+                {name: 'Full house', type: 'lower', score: 0, counted: false, scoreFn: this.scoreFullHouse},
+                {name: 'Small straight', value: null, type: 'lower', counted: false, score: 0, scoreFn: this.scoreSStraight},
+                {name: 'Large straight', value: null, type: 'lower', counted: false, score: 0, scoreFn: this.scoreLStraight},
+                {name: 'Yahtzee', value: 5, type: 'lower', score: 0, counted: false, scoreFn: 'scoreXofKind'},
+                {name: 'Chance', value: null, type: 'lower', score: 0, counted: false, scoreFn: this.scoreChance}
             ]
          }
          this.rollDice = this.rollDice.bind(this);
          this.toggleLock = this.toggleLock.bind(this);
          this.scoreUpper = this.scoreUpper.bind(this);
+         this.scoreXofKind = this.scoreXofKind.bind(this);
     }
 
     rollDice() {
@@ -44,7 +45,38 @@ class Game extends Component {
         }))
     }
 
-    scoreUpper(val) {
+    scoreXofKind(numOfDice, name) {
+        //need name, number of same dice
+        const {dice} = this.state;
+        let counter = {};
+        dice.forEach(item => {
+            counter[item.value] = (counter[item.value] || 0 ) + 1;
+        })
+        const test = (Object.values(counter).filter(item => item >= numOfDice)) > 0;
+        if(test) {
+            this.updateScore(name, this.sumOfDice())
+        }
+    }
+
+    updateScore(name, score) {
+        this.setState(st => ({
+            scores: st.scores.map(item => ((item.name === name && !item.counted) ? {...item, score: score, counted: true} : item )),
+            rolls: 3,
+            dice: st.dice.map(item => ({...item, locked: false}))
+        }));
+        this.rollDice();
+    }
+
+    sumOfDice() {
+        const {dice} = this.state;
+        let score = 0;
+        dice.forEach(item => {
+            score += item.value;
+        });
+        return score;
+    }
+
+    scoreUpper(val, name) {
         const {dice} = this.state;
         var score = 0;
         dice.forEach(item => {
@@ -52,11 +84,7 @@ class Game extends Component {
                 score += item.value;
             }
         })
-        this.setState(st => ({
-            scores: st.scores.map(item => ((item.value === val && !item.counted) ? {...item, score: score, counted: true}: item)),
-            rolls: 3,
-            dice: st.dice.map(item => ({...item, locked: false}))
-        }))
+        this.updateScore(name, score);
     }
 
     render() { 
@@ -76,6 +104,8 @@ class Game extends Component {
             <Row
                 name={item.name}
                 score={item.score}
+                scoreFn={this[item.scoreFn]}
+                value={item.value}
             />
         ));
         return (
