@@ -1,3 +1,33 @@
+.Game {
+    background: #fafafa;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 1%;
+    margin: 50px auto;
+}
+
 .Game-dice {
-    min-height: 64px;
+    min-height: 70px;
+    padding-top: 30px;
+    width: 100%;
+}
+
+button.Game-roll {
+    background-color: #546e7a;
+    color: white;
+    border: 0;
+    padding: 10px 20px;
+
+    transition: background-color 0.5s;
+}
+
+button.Game-roll:hover {
+    background-color: #01579b;
+}
+
+.Game-scores{
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 15px;
 }

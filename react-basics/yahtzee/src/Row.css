@@ -1,3 +1,11 @@
+.row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 15px;
+    border-bottom: 1px solid lightgrey;
+    cursor: pointer;
+}
+
 .row .error {
     color: red;
 }

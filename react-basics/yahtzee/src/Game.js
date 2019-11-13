@@ -24,7 +24,8 @@ class Game extends Component {
                 {name: 'Large straight', value: 5, type: 'lower', counted: false, score: 0, scoreFn: 'scoreStraight'},
                 {name: 'Yahtzee', value: 5, type: 'lower', score: 0, counted: false, scoreFn: 'scoreXofKind'},
                 {name: 'Chance', value: null, type: 'lower', score: 0, counted: false, scoreFn: 'scoreChance'}
-            ]
+            ],
+            isGameOver: false
          }
          this.rollDice = this.rollDice.bind(this);
          this.toggleLock = this.toggleLock.bind(this);
@@ -162,7 +163,7 @@ class Game extends Component {
                 <div className="Game-dice">
                     {diceList}
                 </div>
-                <button onClick={this.rollDice} disabled={rolls === 0}>{rolls} Rolls left!</button>
+                <button onClick={this.rollDice} className="Game-roll" disabled={rolls === 0}>{rolls} Rolls left!</button>
                 <div className="Game-scores">
                     <h2>Upper Section</h2>
                     {upperScores}

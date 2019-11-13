@@ -17,8 +17,8 @@ class Row extends Component {
         const {name, score, counted} = this.props;
         return ( 
             <div className="row" onClick={this.handleClick}>
-                <div>{name}</div>
-                <div className={`${(counted && score === 0)  ? 'error' : ''}`}>{score}</div>
+                <div className="row-name">{name}</div>
+                <div className={`row-score ${(counted && score === 0)  ? 'error' : ''}`}>{score}</div>
             </div>
          );
     }

@@ -4,6 +4,15 @@
     color: steelblue;
 }
 
+.Die.undefined {
+    display: inline-block;
+    height: 56px;
+    width: 50px;
+    background-color: gray;
+    margin-right: 8px;
+    border-radius:10px;
+}
+
 .frozen {
     color: #2c5272;
 }
