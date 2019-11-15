@@ -130,7 +130,7 @@ class Game extends Component {
 
     checkcounted() {
         const {scores} = this.state;
-        const allScoresCounted = scores.filter(item => item.counted === true).length === scores.length;
+        const allScoresCounted = scores.every(item => item.counted === true);
         if (allScoresCounted) {
             this.setState({
                 isGameOver: allScoresCounted
