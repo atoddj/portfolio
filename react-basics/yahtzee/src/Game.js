@@ -122,8 +122,20 @@ class Game extends Component {
             scores: st.scores.map(item => ((item.name === name && !item.counted) ? {...item, score: score, counted: true} : item )),
             rolls: 3,
             dice: st.dice.map(item => ({...item, locked: false}))
-        }));
+        }), 
+            () => this.checkcounted()
+        );
         this.rollDice();
+    }
+
+    checkcounted() {
+        const {scores} = this.state;
+        const allScoresCounted = scores.filter(item => item.counted === true).length === scores.length;
+        if (allScoresCounted) {
+            this.setState({
+                isGameOver: allScoresCounted
+            })
+        }
     }
 
     sumOfDice() {
@@ -136,7 +148,7 @@ class Game extends Component {
     }
 
     render() { 
-        const {dice,rolls,scores} = this.state;
+        const {dice,rolls,scores,isGameOver} = this.state;
         const diceList = dice.map((item) => (
             <Die key={item.id} value={item.value} id={item.id} lockDie={this.toggleLock} frozen={item.locked} />
         ));
@@ -158,6 +170,14 @@ class Game extends Component {
                 counted={item.counted}
             />
         ));
+        if (isGameOver) {
+            return(
+                <div className="Game-over">
+                    Sorry game's over
+                </div>
+            )
+            
+        }
         return (
             <div className="Game">
                 <div className="Game-dice">
