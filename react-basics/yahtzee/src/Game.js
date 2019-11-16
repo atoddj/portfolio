@@ -170,16 +170,15 @@ class Game extends Component {
                 counted={item.counted}
             />
         ));
-        if (isGameOver) {
-            return(
-                <div className="Game-over">
-                    Sorry game's over
-                </div>
-            )
-            
-        }
+        const totalScore = scores.reduce((accumulator, currValue) => (accumulator + currValue.score), 0);
         return (
             <div className="Game">
+                {isGameOver && 
+                    <div className="Game-over">
+                        Game over!
+                        You scored {totalScore} points
+                    </div>
+                }
                 <div className="Game-dice">
                     {diceList}
                 </div>
