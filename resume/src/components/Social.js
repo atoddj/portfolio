@@ -4,18 +4,18 @@ import './Social.css';
 const Social = () => (
   <div className="Social">
     <div className="icons">
-      <a href="https://github.com/atoddj" target="_blank">
-        <i className="fab fa-github-square"></i>
-      </a>
-      <a href="https://twitter.com/toddjones" target="_blank">
-        <i className="fab fa-twitter-square"></i>
-      </a>
-      <a href="https://linkedin.com/in/atoddj" target="_blank">
-        <i className="fab fa-linkedin"></i>
-      </a>
+      <Icon classList="fab fa-github-square" url="https://github.com/atoddj" />
+      <Icon classList="fab fa-twitter-square" url="https://twitter.com/toddjones" />
+      <Icon classList="fab fa-linkedin" url="https://linkedin.com/in/atoddj" />
     </div>
     <p>My Social Profiles</p>
   </div>
+)
+
+const Icon = ({classList, url}) => (
+  <a href={url} target="_blank">
+    <i className={classList}></i>
+  </a>
 )
 
 export default Social;
