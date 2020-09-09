@@ -1,0 +1,19 @@
+.Header {
+    background-color: #f2f7f8;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Header h2 {
+    flex: 1 2 160px;
+    margin: 15px;
+}
+
+.Header button {
+    height: 30px;
+    background: #fff;
+    border: 1px solid black;
+    margin: 20px 8px;
+    font-weight: 700;
+}
