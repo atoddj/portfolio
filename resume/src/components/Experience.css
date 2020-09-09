@@ -1,0 +1,46 @@
+.Experience {
+  color: gray;
+  display: flex;
+  flex-direction: column;
+  font-size: 24px;
+  align-items: center;
+}
+
+.Experience * {
+  width: 800px;
+  max-width: 100%;
+}
+
+.Experience h2 {
+  font-size: 2em;
+  font-weight: 400; 
+}
+
+.Experience ul {
+  margin-left: 200px;
+  padding-left: 100px;
+  border-left: 2px solid black;
+  list-style: none;
+}
+
+.Experience li {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.Experience li::after {
+  position: absolute;
+  content: '';
+  width: 15px;
+  height: 15px;
+  border: 2px solid black;
+  border-radius: 30%;
+  background: orange;
+  top: 10px;
+  left: -110px;
+}
+
+.Experience h3, .Experience h4, .Experience h5 {
+  font-weight: 400;
+  margin: 0 auto;
+}
