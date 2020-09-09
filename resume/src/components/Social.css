@@ -5,12 +5,12 @@
   flex-direction: row;
   flex-wrap: wrap;
   font-size: 3em;
-  justify-content: space-around;
+  justify-content: center;
   padding: 20px;
   align-items: flex-start
 }
 
-.Social i {
+.Social * {
   margin: 0 5px;
 }
 
