@@ -4,6 +4,7 @@ import Header from './Header';
 import Intro from './Intro';
 import Social from './Social';
 import Experience from './Experience';
+import Education from './Education';
 
 const App = () => (
   <div className="App">
@@ -11,6 +12,7 @@ const App = () => (
     <Intro />
     <Social />
     <Experience />
+    <Education />
   </div>
 )
 
