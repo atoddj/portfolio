@@ -1,0 +1,27 @@
+.Intro {
+  background-color: #f2f7f8;
+  display: flex;
+  flex-direction: row;
+  color: grey;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.Intro .Intro-item {
+  margin: 10px 50px;
+  flex: 1 0 40%;
+}
+
+.Intro h1 {
+  font-size: 4em;
+  margin: 0;
+}
+
+.Intro p {
+  font-size: 1.5em;
+}
+
+.Intro .Photo {
+  height: 400px;
+}
