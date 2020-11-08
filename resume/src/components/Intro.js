@@ -1,6 +1,6 @@
 import React from 'react';
+
 import './Intro.css';
-import photo from '../resources/profile.jpg';
 
 const Intro = () => (
   <div className="Intro">
@@ -13,9 +13,6 @@ const Intro = () => (
         atoddj@gmail.com <br/>
         Born in 88
       </p>
-    </div>
-    <div className="Intro-item">
-      <img src={photo} className="Photo" alt="Head shot of Todd Jones"/>
     </div>
   </div>
 )
