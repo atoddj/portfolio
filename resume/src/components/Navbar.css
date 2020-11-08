@@ -1,0 +1,47 @@
+.Navbar {
+  position:fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: #040b14;
+  width: 300px;
+  color: white;
+  text-align: center;
+}
+
+.Navbar .profile {
+
+}
+
+.Navbar .profile h1 {
+  font-size: 24px;
+  
+}
+.Navbar .profile img {
+  border-radius: 50%;
+  border: 10px solid rgba(255, 255, 255, .2);
+  display: block;
+  width: 120px;
+  margin: 15px auto;
+}
+
+.Navbar .profile .social-links a {
+  background: rgba(255, 255, 255, .2);
+  border-radius: 50%;
+  color: white;
+  display: inline-block;
+  font-size: 18px;
+  height: 36px;
+  line-height: 1;
+  margin: 10px;
+  width: 36px;
+  transition: 0.3s;
+}
+
+.Navbar .profile .social-links a:hover {
+  background: rgb(54, 141, 255);
+}
+
+.Navbar .profile .social-links i {
+  padding-top: 8px;
+}

@@ -1,18 +1,10 @@
 import React from 'react';
 import './App.css';
-import Header from './Header';
-import Intro from './Intro';
-import Social from './Social';
-import Experience from './Experience';
-import Education from './Education';
+import Navbar from './Navbar';
 
 const App = () => (
   <div className="App">
-    <Header />
-    <Intro />
-    <Social />
-    <Experience />
-    <Education />
+    <Navbar />
   </div>
 )
 
